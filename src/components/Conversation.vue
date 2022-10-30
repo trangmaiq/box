@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen antialiased bg-background text-white">
+  <div id="app" class="flex h-screen antialiased bg-background text-white">
     <div class="flex flex-row h-full w-full overflow-x-hidden">
       <div class="flex flex-col py-8 pl-6 pr-2 w-64 flex-shrink-0">
         <div class="flex flex-row items-center h-12 w-full">
@@ -26,7 +26,7 @@
         <!--        >-->
         <!--          <div class="h-20 w-20 rounded-full border overflow-hidden">-->
         <!--            <img-->
-        <!--              src="https://avatars3.githubusercontent.com/u/2763884?s=128"-->
+        <!--              src="https://avatars3.githubusercontent.com/"-->
         <!--              alt="Avatar"-->
         <!--              class="h-full w-full"-->
         <!--            />-->
@@ -135,120 +135,11 @@
           <div class="flex flex-col h-full overflow-x-auto mb-4">
             <div class="flex flex-col h-full">
               <div class="grid grid-cols-12 gap-y-2">
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm py-2 px-4 shadow rounded-xl bg-gray250"
-                    >
-                      <div>Hey How are you today?</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm py-2 px-4 shadow rounded-xl bg-gray250"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Vel ipsa commodi illum saepe numquam maxime
-                        asperiores voluptate sit, minima perspiciatis.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                  <div class="flex items-center justify-start flex-row-reverse">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative mr-3 text-sm py-2 px-4 shadow rounded-xl bg-gray200"
-                    >
-                      <div>I'm ok what about you?</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                  <div class="flex items-center justify-start flex-row-reverse">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative mr-3 text-sm py-2 px-4 shadow rounded-xl bg-gray200"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing. ?
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm py-2 px-4 shadow rounded-xl bg-gray250"
-                    >
-                      <div>Lorem ipsum dolor sit amet !</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-6 col-end-13 p-3 rounded-lg">
-                  <div class="flex items-center justify-start flex-row-reverse">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative mr-3 text-sm py-2 px-4 shadow rounded-xl bg-gray200"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing. ?
-                      </div>
-                      <div
-                        class="absolute text-xs bottom-0 right-0 -mb-5 mr-2 text-gray-500"
-                      >
-                        Seen
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-start-1 col-end-8 p-3 rounded-lg">
-                  <div class="flex flex-row items-center">
-                    <div
-                      class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                    >
-                      A
-                    </div>
-                    <div
-                      class="relative ml-3 text-sm py-2 px-4 shadow rounded-xl bg-gray250"
-                    >
-                      <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Perspiciatis, in.
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Message
+                  v-for="message in $store.state.messages"
+                  v-bind:message="message"
+                  :key="message.id"
+                ></Message>
                 <div class="col-start-1 col-end-8 p-3 rounded-lg">
                   <div class="flex flex-row items-center">
                     <div
@@ -373,6 +264,7 @@
             </div>
             <div class="ml-4">
               <button
+                @submit.prevent="onsubmit()"
                 class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
               >
                 <span>Send</span>
@@ -403,13 +295,17 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import Message from "@/components/Message.vue";
 
 @Options({
   props: {
     msg: String,
   },
+  components: {
+    Message,
+  },
 })
-export default class HelloWorld extends Vue {
+export default class Conversation extends Vue {
   msg!: string;
 }
 </script>
